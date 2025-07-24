@@ -1,0 +1,84 @@
+<script src="../checkCountry.js"></script>
+<html>
+    <script src="../../header.js"></script>
+    <body>
+<script>
+window.onload = function () {
+    const retailFavs = JSON.parse(localStorage.getItem("favourites")) || [];
+    const furnitureFavs = JSON.parse(localStorage.getItem("furnitureFavourites")) || [];
+    const allFavs = [...retailFavs, ...furnitureFavs];
+    const list = document.getElementById("retailProductsDisplay");
+
+    if (allFavs.length === 0) {
+        list.innerHTML = "<p>No favourite items found.</p>";
+        return;
+    }
+
+    allFavs.forEach(fav => {
+        const isRetail = retailFavs.some(r => r.sku === fav.sku);
+        const link = isRetail
+            ? `retailProductDetails.html?sku=${fav.sku}`
+            : `furnitureProductDetails.html?sku=${fav.sku}`;
+
+        const li = document.createElement("li");
+        li.className = "col-md-3 col-sm-6 col-xs-12 product";
+        li.innerHTML = `
+            <span class="product-thumb-info">
+                <a href="${link}">
+                    <span class="product-thumb-info-image">
+                        <img alt="${fav.name}" class="img-responsive" src="${fav.image}">
+                    </span>
+                    <span class="product-thumb-info-content">
+                        <h4 style="display: flex; align-items: center; justify-content: space-between;">
+                            <span>${fav.name}</span>
+                            <i class="fa fa-heart" style="color:red; font-size: 18px; cursor:pointer;" onclick="event.preventDefault(); removeFavourite('${fav.sku}', ${isRetail})"></i>
+                        </h4>
+                    </span>
+                </a>
+            </span>
+        `;
+        list.appendChild(li);
+    });
+};
+
+function removeFavourite(sku, isRetail) {
+    const key = isRetail ? "favourites" : "furnitureFavourites";
+    let favourites = JSON.parse(localStorage.getItem(key)) || [];
+    favourites = favourites.filter(f => f.sku !== sku);
+    localStorage.setItem(key, JSON.stringify(favourites));
+    location.reload();
+}
+</script>
+
+
+
+        <div class="body">
+            <script src="menu2.js"></script>
+            <div class="body">
+                <div role="main" class="main">
+                    <section class="page-top">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h2>Favourite Items</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h2 class="shorter"><strong id="categoryTitle"></strong></h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <ul id="retailProductsDisplay" class="products product-thumb-info-list" style="list-style-type: none; margin-left: -3%;" data-plugin-masonry></ul>
+                        </div>
+                        <hr class="tall">
+                    </div>
+                </div>
+            </div>
+            <script src="../footer.js"></script>
+        </div>
+    </body>
+</html>
