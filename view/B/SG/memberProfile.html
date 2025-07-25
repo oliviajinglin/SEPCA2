@@ -25,7 +25,7 @@
             }).catch(function (error) {
                 console.log(error);
             });
-
+/*
             var member = null;
             document.addEventListener('DOMContentLoaded', function(){
                 member = JSON.parse(sessionStorage.getItem("member"));
@@ -33,6 +33,33 @@
                 if(member.sla == 1) {
                     document.getElementById("serviceLevelAgreement").checked = true;
                 }
+
+*/
+
+            document.addEventListener('DOMContentLoaded', function () {
+                const memberData = sessionStorage.getItem("member");
+
+                if (!memberData) {
+                // Member not found in sessionStorage — maybe session expired
+                const countryPrefix = localStorage.getItem("urlPrefix");
+                    window.location.href = '/B/' + countryPrefix + '/memberLogin.html';
+                    return;
+                }
+
+            const member = JSON.parse(memberData);
+
+            // Autofill the form fields
+            document.getElementById("name").value = member.name || '';
+            document.getElementById("email").value = member.email || '';
+            document.getElementById("phone").value = member.phone || '';
+            document.getElementById("country").value = member.country || '';
+            document.getElementById("address").value = member.address || '';
+            document.getElementById("securityQuestion").value = member.securityQuestion || '';
+            document.getElementById("securityAnswer").value = member.securityAnswer || '';
+            document.getElementById("age").value = member.age || '';
+            document.getElementById("income").value = member.income || '';
+            document.getElementById("serviceLevelAgreement").checked = member.sla == 1;
+            });
 
                 //Get Bought Items
                 fetch(new Request('/api/getBoughtItem/' + member.id,
@@ -169,7 +196,7 @@
                 }).catch(function(error) {
                     console.log(error);
                 });
-            }, false);
+            // }, false);
 
             function addWorkDays(startDate, days) {
                 var dow = startDate.getDay();
