@@ -611,7 +611,7 @@ var emailer = nodemailer.createTransport({
 var emailer = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'jeinakoh22@gmail.com', 
-        pass: 'password'
+        user: 'jeina6866@gmail.com', 
+        pass: 'iujdfysuwdqgxskh'
     }
-});
+}); 

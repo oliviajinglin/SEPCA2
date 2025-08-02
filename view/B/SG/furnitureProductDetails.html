@@ -443,6 +443,10 @@
                 document.getElementById("price").innerHTML = '$' + furniture.price + '.00';
                 document.getElementById("description").innerHTML = furniture.description;
 
+                document.getElementById("productHeight").textContent = furniture.height;
+                document.getElementById("productLength").textContent = furniture.length;
+                document.getElementById("productWidth").textContent = furniture.width;
+
                 if (memberEmail != null && memberEmail !== '') {
                     document.getElementById("addToCartBtn").innerHTML = '<button class="btn btn-primary" onclick="addToCart(\'' +
                         furniture.sku + '\',\'' + furniture.id + '\',' + furniture.price + ',\'' + furniture.name + '\',\'' +
@@ -630,7 +634,13 @@
                                     <p class="price"><h4 class="amount" id="price"></h4></p>
                                     <strong>Description</strong>
                                     <p class="taller" id="description"></p>
-                                    <p id="furnitureInfo"></p>
+                                    <p id="furnitureInfo">
+                                        <strong>Height:</strong> <span id="productHeight"></span> cm<br/>
+                                        <strong>Length:</strong> <span id="productLength"></span> cm<br/>
+                                        <strong>Width:</strong> <span id="productWidth"></span> cm
+                                    </p>
+
+
                                     <div class="product_meta">
                                         <span class="posted_in">Category: <a id="categoryLink" rel="tag"></a></span>
                                     </div>
